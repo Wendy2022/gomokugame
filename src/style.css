@@ -1,0 +1,16 @@
+.board::after{
+    clear: both;
+    display: block;
+    content: '';
+}
+.square{
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    float: left;
+    border: 1px solid black;
+    margin-right: -1px;
+    margin-bottom: -1px;
+    text-align: center;
+    font-size: 50px
+}
