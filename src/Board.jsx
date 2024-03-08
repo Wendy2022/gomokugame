@@ -1,23 +1,65 @@
 import Square from "./Square"
 import { useState } from "react"
-
-function Board(){
-    const [squares,setSquares]=useState(Array(9).fill(null))
+function getNextLetter(squares){
     let square='X'
     let squareNum=squares.filter(val=>val==="X"||val==="O").length
-    
-    if (squareNum%2===1) {
-        square='O'
+    if (squareNum!==9) {
+        if (squareNum%2===1) {
+            square='O'
+        }else{
+            square='X'
+        }
     }else{
-        square='X'
+        square=null
     }
+    
+    return square
+}
+function calWinner(squares){
+    let winner=null
+    const winConditions=[
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ]
+    winConditions.map(([a,b,c])=>{
+        if (squares[a]!==null && squares[a]===squares[b] && squares[a]===squares[c]) {
+            winner=squares[a]
+        }
+    })
+    return winner
+}
+
+function Board(){
+    let status='The next player is X'
+
+    const [squares,setSquares]=useState(Array(9).fill(null))
+    const newLetter=getNextLetter(squares)
+    const winner=calWinner(squares)
+    if (winner) {
+        status=`the winner is ${winner}`
+    }else if(newLetter==null){
+        status='nobody wins'
+    }else{
+        status=`the next player is ${newLetter}`
+    }
+    
     const clickHandler=(index)=>{
-        const newSquares=squares.slice()
-        newSquares[index]=square
-        setSquares(newSquares)
+        if (squares[index]==null && winner==null) {
+            const newSquares=squares.slice()
+            newSquares[index]=newLetter
+            setSquares(newSquares)
     }
+        }
+        
     return (
-        <>
+        <>  
+            {status}
             <div className="board">
                 <Square value={squares[0]} index={0} onClick={()=>clickHandler(0)}></Square>
                 <Square value={squares[1]} index={1} onClick={()=>clickHandler(1)}></Square>
