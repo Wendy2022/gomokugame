@@ -17,7 +17,7 @@ function getNextLetter(squares){
 }
 
 
-function Board({squares,setSquares,winner}){
+function Board({squares,handleSquareChange,winner}){
     let status='The next player is X'
 
     
@@ -35,7 +35,7 @@ function Board({squares,setSquares,winner}){
         if (squares[index]==null && winner==null) {
             const newSquares=squares.slice()
             newSquares[index]=newLetter
-            setSquares(newSquares)
+            handleSquareChange(newSquares)
     }
         }
         

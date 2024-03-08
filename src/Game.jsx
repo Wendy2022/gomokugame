@@ -24,14 +24,28 @@ function calWinner(squares){
 
 function Game(){
     const [squares,setSquares]=useState(Array(9).fill(null))
-    const winner=calWinner(squares)
+    const [history,setHistory]=useState([Array(9).fill(null)])
+    const [winner,setWinner]=useState(undefined)
+    if (!winner) {
+        const result=calWinner(squares)
+        result && setWinner(result)
+    }
+    
+    function handleSquareChange(newSquare){
+        setSquares(newSquare)
+        setHistory([...history,newSquare])
+    }
+    function handleClick(index){
+        const newSquares=history[index]
+        setSquares(newSquares)
+    }
     return (
         <div className="game">
             <div className="board">
-                <Board squares={squares} setSquares={setSquares} winner={winner}/>
+                <Board squares={squares} handleSquareChange={handleSquareChange} winner={winner}/>
             </div>
             <div className="history">
-               { winner !==null ? <History/>:null}
+               { winner ? <History history={history} handleClick={handleClick}/>:null}
             </div>
         </div>
     )
