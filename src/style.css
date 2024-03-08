@@ -1,3 +1,6 @@
+.game{
+    display: flex;
+}
 .board::after{
     clear: both;
     display: block;
@@ -14,3 +17,4 @@
     text-align: center;
     font-size: 50px
 }
+

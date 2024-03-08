@@ -1,5 +1,5 @@
 import Square from "./Square"
-import { useState } from "react"
+
 function getNextLetter(squares){
     let square='X'
     let squareNum=squares.filter(val=>val==="X"||val==="O").length
@@ -15,32 +15,14 @@ function getNextLetter(squares){
     
     return square
 }
-function calWinner(squares){
-    let winner=null
-    const winConditions=[
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [2,4,6]
-    ]
-    winConditions.map(([a,b,c])=>{
-        if (squares[a]!==null && squares[a]===squares[b] && squares[a]===squares[c]) {
-            winner=squares[a]
-        }
-    })
-    return winner
-}
 
-function Board(){
+
+function Board({squares,setSquares,winner}){
     let status='The next player is X'
 
-    const [squares,setSquares]=useState(Array(9).fill(null))
+    
     const newLetter=getNextLetter(squares)
-    const winner=calWinner(squares)
+   
     if (winner) {
         status=`the winner is ${winner}`
     }else if(newLetter==null){
